@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:quizzler/quiz_brain.dart';
+import 'package:quizzler/components/quiz_brain.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});

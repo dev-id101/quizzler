@@ -1,4 +1,4 @@
-import 'package:quizzler/questions.dart';
+import 'package:quizzler/components/questions.dart';
 
 class QuizBrain {
   int _questionNumber = 0;
