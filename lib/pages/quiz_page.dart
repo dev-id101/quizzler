@@ -22,6 +22,7 @@ class _QuizPageState extends State<QuizPage> {
           context: context,
           title: 'Finished',
           desc: "You've reached the end of the quiz",
+          // onWillPopActive: true
         ).show();
         quizBrain.reset();
         scoreKeeper = [];
