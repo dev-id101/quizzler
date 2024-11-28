@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quizzler/components/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -16,23 +17,33 @@ class _QuizPageState extends State<QuizPage> {
   void checkAnswer(bool userPickedAnswer) {
     bool? correctAnswer = quizBrain.getCorrectAnswer();
     setState(() {
-      if (userPickedAnswer == correctAnswer) {
-        scoreKeeper.add(
-          const Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
-        print('User got it right!');
+      if (quizBrain.isFinished() == true) {
+        Alert(
+          context: context,
+          title: 'Finished',
+          desc: "You've reached the end of the quiz",
+        ).show();
+        quizBrain.reset();
+        scoreKeeper = [];
       } else {
-        scoreKeeper.add(const Icon(
-          Icons.close,
-          color: Colors.red,
-        ));
-        print('User got it wrong');
-      }
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+          print('User got it right!');
+        } else {
+          scoreKeeper.add(const Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+          print('User got it wrong');
+        }
 
-      quizBrain.nextQuestion();
+        quizBrain.nextQuestion();
+      }
     });
   }
 
@@ -167,7 +178,10 @@ class _QuizPageState extends State<QuizPage> {
             foregroundColor: MaterialStateProperty.all(Colors.white),
             textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
             side: MaterialStateProperty.all(
-              const BorderSide(color: Colors.white, width: 2),
+              const BorderSide(
+                color: Colors.white,
+                width: 2,
+              ),
             ),
           ),
           child: Text(
