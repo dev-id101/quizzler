@@ -13,6 +13,29 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
+  void checkAnswer(bool userPickedAnswer) {
+    bool? correctAnswer = quizBrain.getCorrectAnswer();
+    setState(() {
+      if (userPickedAnswer == correctAnswer) {
+        scoreKeeper.add(
+          const Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+        print('User got it right!');
+      } else {
+        scoreKeeper.add(const Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+        print('User got it wrong');
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
+
   QuizBrain quizBrain = QuizBrain();
 
   @override
@@ -73,43 +96,16 @@ class _QuizPageState extends State<QuizPage> {
           option: 'True',
           color: Colors.green,
           onPressed: () {
-            bool? correctAnswer = quizBrain.getCorrectAnswer();
-
-            if (correctAnswer == true) {
-              print('User got it right!');
-            } else {
-              print('User got it wrong');
-            }
-
-            setState(() {
-              quizBrain.nextQuestion();
-              scoreKeeper.add(const Icon(
-                Icons.check,
-                color: Colors.green,
-              ));
-            });
+            checkAnswer(true);
           },
         ),
         optionButton(
-            option: 'False',
-            color: Colors.red,
-            onPressed: () {
-              bool? correctAnswer = quizBrain.getCorrectAnswer();
-
-              if (correctAnswer == false) {
-                print('User got it right!');
-              } else {
-                print('User got it wrong');
-              }
-
-              setState(() {
-                quizBrain.nextQuestion();
-                scoreKeeper.add(const Icon(
-                  Icons.close,
-                  color: Colors.red,
-                ));
-              });
-            }),
+          option: 'False',
+          color: Colors.red,
+          onPressed: () {
+            checkAnswer(false);
+          },
+        ),
         const SizedBox(
           height: 20,
         ),
@@ -134,8 +130,15 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                   ),
                 ),
-                Row(
-                  children: scoreKeeper,
+                Expanded(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Row(
+                        children: scoreKeeper,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

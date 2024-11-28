@@ -18,7 +18,7 @@ class QuizBrain {
         q: 'In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.',
         a: true),
     Question(
-        q: 'The loudest sound produced by an animal is 188 decibels. That animal is the AFrican Elephant.',
+        q: 'The loudest sound produced by an animal is 188 decibels. That animal is the African Elephant.',
         a: false),
     Question(
         q: 'The total surface area of two human lungs is approximately 70 square metres.',
@@ -44,5 +44,9 @@ class QuizBrain {
 
   bool? getCorrectAnswer() {
     return _questionBank[_questionNumber].questionAnswer;
+  }
+
+  void isFinished(){
+    
   }
 }
